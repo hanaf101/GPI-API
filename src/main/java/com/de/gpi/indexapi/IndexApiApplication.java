@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class IndexapiApplication {
+public class IndexApiApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(IndexapiApplication.class, args);
+		SpringApplication.run(IndexApiApplication.class, args);
 	}
 
 }
