@@ -1,6 +1,5 @@
-package com.de.gpi.indexapi.config;
+package com.example.gpi.indexapi.config;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;

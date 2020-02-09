@@ -1,4 +1,4 @@
-package com.de.gpi.indexapi.model;
+package com.example.gpi.indexapi.model;
 
 import lombok.Getter;
 import lombok.ToString;

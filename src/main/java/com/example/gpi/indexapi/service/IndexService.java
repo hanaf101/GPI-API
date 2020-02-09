@@ -1,4 +1,4 @@
-package com.de.gpi.indexapi.service;
+package com.example.gpi.indexapi.service;
 
 import java.io.PrintWriter;
 

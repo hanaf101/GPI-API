@@ -8,7 +8,7 @@
 		<version>2.2.4.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.de.gpi</groupId>
+	<groupId>com.example.gpi</groupId>
 	<artifactId>indexapi</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>indexapi</name>

@@ -1,6 +1,6 @@
-package com.de.gpi.indexapi.service;
+package com.example.gpi.indexapi.service;
 
-import com.de.gpi.indexapi.model.GreenPowerIndex;
+import com.example.gpi.indexapi.model.GreenPowerIndex;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;

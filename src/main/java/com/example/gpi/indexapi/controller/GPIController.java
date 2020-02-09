@@ -1,6 +1,6 @@
-package com.de.gpi.indexapi.controller;
+package com.example.gpi.indexapi.controller;
 
-import com.de.gpi.indexapi.service.GPIService;
+import com.example.gpi.indexapi.service.GPIService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
