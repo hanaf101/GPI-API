@@ -6,15 +6,15 @@ import lombok.ToString;
 @Getter
 @ToString
 public class Forecast {
-    private String scale;
-    private String epochtime;
-    private String eevalue;
-    private String ewind;
-    private String esolar;
-    private String gsi;
-    private String timeStamp;
-    private String energyprice;
-    private String co2_g_standard;
-    private String co2_g_oekostrom;
-    private  String base;
+    private double scale;
+    private long epochtime;
+    private int eevalue;
+    private int ewind;
+    private int esolar;
+    private int gsi;
+    private long timeStamp;
+    private double energyprice;
+    private int co2_g_standard;
+    private int co2_g_oekostrom;
+    private  int base;
 }

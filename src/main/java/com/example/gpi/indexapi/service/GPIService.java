@@ -1,6 +1,9 @@
 package com.example.gpi.indexapi.service;
 
+import com.example.gpi.indexapi.model.Forecast;
 import com.example.gpi.indexapi.model.GreenPowerIndex;
+import com.example.gpi.indexapi.model.Location;
+import com.example.gpi.indexapi.utils.GenericUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
@@ -15,14 +18,17 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.Format;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+
+
+/*
+ *Implement IndexService Interface for connectivity with Green Power Index
+ */
 
 @Service
 @Slf4j
-
-/*
-*Implement IndexService Interface for connectivity with Green Power Index
- */
 public class GPIService implements IndexService {
 
 
@@ -30,50 +36,21 @@ public class GPIService implements IndexService {
     private String gpiEndpoint;
 
     @Autowired
-    private RestTemplate restTemplate;
+    private GenericUtils genericUtils;
 
 
     @Override
-    public void downloadData(PrintWriter printWriter, String pin) {
+    public void downloadData(PrintWriter printWriter, String pin) throws IOException {
         String NEW_LINE_SEPARATOR = "\n";
-        //CSV file header
-        final Format format = new SimpleDateFormat("YYYY-MM-DD HH:mm");
-
-        final GreenPowerIndex gpi = restTemplate.getForObject(gpiEndpoint + pin, GreenPowerIndex.class);
+        final GreenPowerIndex gpi = genericUtils.readStreamAndGetObject(gpiEndpoint + pin, GreenPowerIndex.class);
         if(gpi != null) {
-            final Object[] FILE_HEADER = {
-                    "Pin Code",
-                    "City",
-                    "time",
-                    "Scale",
-                    "EE Value",
-                    "E Wind",
-                    "E Solar",
-                    "Base",
-                    "GSI",
-                    "Time Stamp",
-                    "Energy Price",
-                    "CO2 Standard",
-                    "CO2 Oekostrom"
-            };
             try(CSVPrinter csvPrinter = new CSVPrinter(new BufferedWriter(printWriter),
                     CSVFormat.DEFAULT.withRecordSeparator(NEW_LINE_SEPARATOR))) {
                 //Create CSV file header
-                csvPrinter.printRecord(FILE_HEADER);
-
-                gpi.getForecast().forEach(forecast -> {
-                    Date date = new Date(Long.parseLong(forecast.getTimeStamp()));
-                    String recordTime = format.format(date);
-                    try {
-                        csvPrinter.printRecord(gpi.getLocation().getZip(), gpi.getLocation().getCity(),
-                                recordTime, forecast.getScale(), forecast.getEevalue(), forecast.getEwind(),
-                                forecast.getEsolar(), forecast.getBase(), forecast.getGsi(), recordTime,
-                                forecast.getEnergyprice(), forecast.getCo2_g_standard(), forecast.getCo2_g_oekostrom()
-                        );
-                    } catch (IOException  e) {
-
-                    }
-                });
+                csvPrinter.printRecord(getFileHeader());
+                for (Forecast forecast : gpi.getForecast()) {
+                    csvPrinter.printRecord(getRecord(gpi.getLocation(), forecast));
+                }
             } catch (IOException e) {
                 log.error(e.getMessage(), e);
             } finally {
@@ -83,5 +60,46 @@ public class GPIService implements IndexService {
         } else {
             throw new NotFoundException();
         }
+    }
+
+    private List<Object> getRecord(Location location, Forecast forecast) {
+        final Format format = new SimpleDateFormat("YYYY-MM-DD HH:mm");
+        Date date = new Date(forecast.getTimeStamp());
+        String recordTime = format.format(date);
+        List<Object> record = new ArrayList<>();
+        record.add(location.getZip());
+        record.add(location.getCity());
+        record.add(recordTime);
+        record.add(forecast.getScale());
+        record.add(forecast.getEevalue());
+        record.add(forecast.getEwind());
+        record.add(forecast.getEsolar());
+        record.add(forecast.getBase());
+        record.add(forecast.getGsi());
+        record.add(recordTime);
+        record.add(forecast.getEnergyprice());
+        record.add(forecast.getCo2_g_standard());
+        record.add(forecast.getCo2_g_oekostrom());
+
+        return record;
+    }
+
+    private Object[] getFileHeader() {
+        final Object[] FILE_HEADER = {
+                "Pin Code",
+                "City",
+                "Time",
+                "Scale",
+                "EE Value",
+                "E Wind",
+                "E Solar",
+                "Base",
+                "GSI",
+                "Time Stamp",
+                "Energy Price",
+                "CO2 Standard",
+                "CO2 Oekostrom"
+        };
+        return FILE_HEADER;
     }
 }
