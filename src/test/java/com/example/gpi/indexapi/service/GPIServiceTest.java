@@ -1,7 +1,5 @@
 package com.example.gpi.indexapi.service;
 
-
-import com.example.gpi.indexapi.controller.GPIController;
 import com.example.gpi.indexapi.model.GreenPowerIndex;
 import com.example.gpi.indexapi.test.utils.TestUtil;
 import com.example.gpi.indexapi.utils.GenericUtils;
@@ -13,8 +11,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.web.client.RestTemplate;
-
 import javax.ws.rs.NotFoundException;
 import java.io.*;
 
