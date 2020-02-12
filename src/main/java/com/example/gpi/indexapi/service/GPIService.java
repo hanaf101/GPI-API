@@ -29,13 +29,11 @@ import java.util.List;
 @Slf4j
 public class GPIService implements IndexService {
 
-
     @Value("${GPI.endpoint}")
     private String gpiEndpoint;
 
     @Autowired
     private GenericUtils genericUtils;
-
 
     @Override
     public void downloadData(PrintWriter printWriter, String pin) throws IOException {
@@ -78,7 +76,6 @@ public class GPIService implements IndexService {
         record.add(forecast.getEnergyprice());
         record.add(forecast.getCo2_g_standard());
         record.add(forecast.getCo2_g_oekostrom());
-
         return record;
     }
 
